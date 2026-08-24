@@ -4,6 +4,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Cell,
   ComposedChart,
   Legend,
   Line,
@@ -22,7 +23,7 @@ type Props = {
   tripMonths?: string[];
 };
 
-const axisStyle = { fill: "hsl(var(--muted-foreground))", fontSize: 12 } as const;
+const axisStyle = { fill: "var(--muted-foreground)", fontSize: 12 } as const;
 
 function Tile({
   icon: Icon,
@@ -45,10 +46,10 @@ function Tile({
 }
 
 const tooltipStyle = {
-  background: "hsl(var(--card))",
-  border: "1px solid hsl(var(--border))",
+  background: "var(--card)",
+  border: "1px solid var(--border)",
   borderRadius: "0.75rem",
-  color: "hsl(var(--card-foreground))",
+  color: "var(--card-foreground)",
   fontSize: 12,
 };
 
@@ -98,15 +99,15 @@ export function WeatherSection({ summary, daily, monthly, tripMonths = [] }: Pro
             <div className="mt-4 h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <ComposedChart data={daily} margin={{ top: 8, right: 8, bottom: 0, left: -20 }}>
-                  <CartesianGrid stroke="hsl(var(--border))" strokeDasharray="3 3" vertical={false} />
+                  <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" vertical={false} />
                   <XAxis dataKey="day" tickFormatter={(d) => `D${d}`} tick={axisStyle} axisLine={false} tickLine={false} />
                   <YAxis yAxisId="t" tick={axisStyle} axisLine={false} tickLine={false} unit="°" />
                   <YAxis yAxisId="r" orientation="right" domain={[0, 100]} tick={axisStyle} axisLine={false} tickLine={false} unit="%" />
                   <Tooltip contentStyle={tooltipStyle} />
                   <Legend wrapperStyle={{ fontSize: 12 }} />
-                  <Area yAxisId="t" type="monotone" dataKey="highC" name="High °C" stroke="hsl(var(--primary))" fill="hsl(var(--primary) / 0.2)" />
-                  <Area yAxisId="t" type="monotone" dataKey="lowC" name="Low °C" stroke="hsl(var(--accent))" fill="hsl(var(--accent) / 0.15)" />
-                  <Line yAxisId="r" type="monotone" dataKey="rainChance" name="Rain %" stroke="hsl(var(--muted-foreground))" strokeDasharray="4 4" dot={false} />
+                  <Area yAxisId="t" type="monotone" dataKey="highC" name="High °C" stroke="var(--primary)" fill="color-mix(in oklab, var(--primary) 25%, transparent)" />
+                  <Area yAxisId="t" type="monotone" dataKey="lowC" name="Low °C" stroke="var(--accent)" fill="color-mix(in oklab, var(--accent) 20%, transparent)" />
+                  <Line yAxisId="r" type="monotone" dataKey="rainChance" name="Rain %" stroke="var(--muted-foreground)" strokeDasharray="4 4" dot={false} />
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
@@ -119,19 +120,18 @@ export function WeatherSection({ summary, daily, monthly, tripMonths = [] }: Pro
             <div className="mt-4 h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={monthly} margin={{ top: 8, right: 8, bottom: 0, left: -20 }}>
-                  <CartesianGrid stroke="hsl(var(--border))" strokeDasharray="3 3" vertical={false} />
+                  <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" vertical={false} />
                   <XAxis dataKey="month" tick={axisStyle} axisLine={false} tickLine={false} interval={0} />
                   <YAxis tick={axisStyle} axisLine={false} tickLine={false} unit="°" />
                   <Tooltip contentStyle={tooltipStyle} />
                   <Bar dataKey="avgTempC" name="Avg °C" radius={[6, 6, 0, 0]}>
                     {monthly.map((m) => (
-                      <Bar
+                      <Cell
                         key={m.month}
-                        dataKey="avgTempC"
                         fill={
                           highlighted.has(m.month.slice(0, 3).toLowerCase())
-                            ? "hsl(var(--primary))"
-                            : "hsl(var(--muted))"
+                            ? "var(--primary)"
+                            : "var(--muted)"
                         }
                       />
                     ))}
