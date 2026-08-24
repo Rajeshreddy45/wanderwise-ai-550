@@ -120,7 +120,15 @@ Return JSON with EXACTLY this shape:
   "attractions": [ { "name": string, "description": string, "bestTime": string, "entryFee": string } ] (4-6 items),
   "packing": string[] (8-12 items),
   "safetyTips": string[] (4-6 items),
-  "emergency": [ { "label": string, "value": string } ] (3-4 items like police, ambulance, tourist helpline)
+  "emergency": [ { "label": string, "value": string } ] (3-4 items like police, ambulance, tourist helpline),
+  "weatherSummary": {
+    "avgTempC": number, "avgHumidity": number (0-100), "rainChance": number (0-100),
+    "windKph": number, "condition": string (e.g. "Partly cloudy"),
+    "bestSeason": string, "bestMonths": string (e.g. "March – June"),
+    "seasonNote": string (1-2 sentences on how the chosen dates compare to the best season)
+  },
+  "monthlyClimate": [ { "month": "Jan", "avgTempC": number, "rainMm": number } ] (exactly 12 entries, Jan..Dec),
+  "dailyWeather": [ { "day": number, "condition": string, "highC": number, "lowC": number, "rainChance": number (0-100), "humidity": number (0-100), "windKph": number } ] (exactly ${input.days} entries)
 }`;
 }
 
