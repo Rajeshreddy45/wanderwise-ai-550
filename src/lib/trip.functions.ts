@@ -75,6 +75,9 @@ export type TripPlan = {
   packing: string[];
   safetyTips: string[];
   emergency: { label: string; value: string }[];
+  weatherSummary?: WeatherSummary;
+  dailyWeather?: DailyWeather[];
+  monthlyClimate?: MonthlyClimate[];
 };
 
 const SYSTEM = `You are Wanderly, an expert AI travel planner. Given trip details, produce a rich, realistic, personalized plan.
