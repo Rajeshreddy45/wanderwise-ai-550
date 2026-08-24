@@ -292,6 +292,11 @@ function LoadingState() {
 function PlanView({ plan, currency }: { plan: TripPlan; currency: string }) {
   const total = plan.totalCost ?? plan.budget.reduce((s, b) => s + (Number(b.amount) || 0), 0);
   const max = useMemo(() => Math.max(...plan.budget.map((b) => Number(b.amount) || 0), 1), [plan.budget]);
+  const bestMonths = useMemo(() => {
+    const text = `${plan.weatherSummary?.bestMonths ?? ""} ${plan.weatherSummary?.bestSeason ?? ""} ${plan.bestSeason ?? ""}`;
+    const names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return names.filter((m) => new RegExp(m, "i").test(text));
+  }, [plan.weatherSummary, plan.bestSeason]);
 
   const copyItinerary = async () => {
     const text = plan.days
