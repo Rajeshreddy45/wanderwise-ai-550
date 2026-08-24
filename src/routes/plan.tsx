@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 
 import { generateTripPlan, type TripInputType, type TripPlan } from "@/lib/trip.functions";
+import { DayWeatherChip, WeatherSection } from "@/components/WeatherSection";
 
 type Search = { destination?: string };
 
@@ -291,6 +292,11 @@ function LoadingState() {
 function PlanView({ plan, currency }: { plan: TripPlan; currency: string }) {
   const total = plan.totalCost ?? plan.budget.reduce((s, b) => s + (Number(b.amount) || 0), 0);
   const max = useMemo(() => Math.max(...plan.budget.map((b) => Number(b.amount) || 0), 1), [plan.budget]);
+  const bestMonths = useMemo(() => {
+    const text = `${plan.weatherSummary?.bestMonths ?? ""} ${plan.weatherSummary?.bestSeason ?? ""} ${plan.bestSeason ?? ""}`;
+    const names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return names.filter((m) => new RegExp(m, "i").test(text));
+  }, [plan.weatherSummary, plan.bestSeason]);
 
   const copyItinerary = async () => {
     const text = plan.days
@@ -333,6 +339,14 @@ function PlanView({ plan, currency }: { plan: TripPlan; currency: string }) {
         </div>
       </section>
 
+      {/* Weather */}
+      <WeatherSection
+        summary={plan.weatherSummary}
+        daily={plan.dailyWeather}
+        monthly={plan.monthlyClimate}
+        tripMonths={bestMonths}
+      />
+
       {/* Days */}
       <section className="rounded-3xl border border-border bg-card p-8 shadow-card">
         <h3 className="font-display text-2xl font-bold">Day-by-day itinerary</h3>
@@ -343,6 +357,7 @@ function PlanView({ plan, currency }: { plan: TripPlan; currency: string }) {
                 <h4 className="font-display text-xl font-bold">
                   <span className="text-primary">Day {d.day}</span> · {d.title}
                 </h4>
+                <DayWeatherChip w={plan.dailyWeather?.find((w) => w.day === d.day)} />
               </div>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 <Slot label="Morning" text={d.morning} />
