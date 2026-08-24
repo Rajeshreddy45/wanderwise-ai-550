@@ -334,6 +334,14 @@ function PlanView({ plan, currency }: { plan: TripPlan; currency: string }) {
         </div>
       </section>
 
+      {/* Weather */}
+      <WeatherSection
+        summary={plan.weatherSummary}
+        daily={plan.dailyWeather}
+        monthly={plan.monthlyClimate}
+        tripMonths={bestMonths}
+      />
+
       {/* Days */}
       <section className="rounded-3xl border border-border bg-card p-8 shadow-card">
         <h3 className="font-display text-2xl font-bold">Day-by-day itinerary</h3>
@@ -344,6 +352,7 @@ function PlanView({ plan, currency }: { plan: TripPlan; currency: string }) {
                 <h4 className="font-display text-xl font-bold">
                   <span className="text-primary">Day {d.day}</span> · {d.title}
                 </h4>
+                <DayWeatherChip w={plan.dailyWeather?.find((w) => w.day === d.day)} />
               </div>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 <Slot label="Morning" text={d.morning} />
