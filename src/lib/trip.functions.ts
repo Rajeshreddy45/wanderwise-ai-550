@@ -34,6 +34,29 @@ export type DayPlan = {
 
 export type BudgetItem = { category: string; amount: number };
 
+export type WeatherSummary = {
+  avgTempC: number;
+  avgHumidity: number;
+  rainChance: number;
+  windKph: number;
+  condition: string;
+  bestSeason: string;
+  bestMonths: string;
+  seasonNote: string;
+};
+
+export type DailyWeather = {
+  day: number;
+  condition: string;
+  highC: number;
+  lowC: number;
+  rainChance: number;
+  humidity: number;
+  windKph: number;
+};
+
+export type MonthlyClimate = { month: string; avgTempC: number; rainMm: number };
+
 export type TripPlan = {
   destination: string;
   route: string;
