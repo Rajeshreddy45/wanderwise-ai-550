@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 
 import { generateTripPlan, type TripInputType, type TripPlan } from "@/lib/trip.functions";
+import { DayWeatherChip, WeatherSection } from "@/components/WeatherSection";
 
 type Search = { destination?: string };
 
