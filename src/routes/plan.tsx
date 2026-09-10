@@ -232,7 +232,8 @@ function PlanPage() {
             )}
           </form>
 
-          <div id="plan-result">
+          <div id="plan-result" className="space-y-6">
+            <LiveWeather />
             {status === "idle" && <EmptyState />}
             {status === "loading" && <LoadingState />}
             {status === "done" && plan && <PlanView plan={plan} currency={form.currency} />}
