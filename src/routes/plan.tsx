@@ -22,6 +22,7 @@ import {
 
 import { generateTripPlan, type TripInputType, type TripPlan } from "@/lib/trip.functions";
 import { DayWeatherChip, WeatherSection } from "@/components/WeatherSection";
+import { LiveWeather } from "@/components/LiveWeather";
 
 type Search = { destination?: string };
 
