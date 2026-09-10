@@ -22,6 +22,7 @@ import {
 
 import { generateTripPlan, type TripInputType, type TripPlan } from "@/lib/trip.functions";
 import { DayWeatherChip, WeatherSection } from "@/components/WeatherSection";
+import { LiveWeather } from "@/components/LiveWeather";
 
 type Search = { destination?: string };
 
@@ -231,7 +232,8 @@ function PlanPage() {
             )}
           </form>
 
-          <div id="plan-result">
+          <div id="plan-result" className="space-y-6">
+            <LiveWeather />
             {status === "idle" && <EmptyState />}
             {status === "loading" && <LoadingState />}
             {status === "done" && plan && <PlanView plan={plan} currency={form.currency} />}
